@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="MusicShop">
+        <createTable tableName="ORDER_">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ORDER_"/>
+            </column>
+            <column name="ORDER_DATE" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="MusicShop">
+        <addColumn tableName="COUNT_INSTRUMENTS">
+            <column name="ORDER_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3" author="MusicShop">
+        <createIndex indexName="IDX_COUNT_INSTRUMENTS_ORDER" tableName="COUNT_INSTRUMENTS">
+            <column name="ORDER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ORDER_ID" baseTableName="COUNT_INSTRUMENTS"
+                                 constraintName="FK_COUNT_INSTRUMENTS_ON_ORDER" referencedColumnNames="ID"
+                                 referencedTableName="ORDER_"/>
+    </changeSet>
+</databaseChangeLog>

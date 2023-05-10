@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="MusicShop">
+        <createTable tableName="INSTRUMENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INSTRUMENT"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="YEAR_MANUFACTURE" type="DATE"/>
+            <column name="CATEGORY" type="VARCHAR(255)"/>
+            <column name="COUNTRY" type="VARCHAR(255)"/>
+            <column name="WARRANTY" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRICE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="MusicShop">
+        <createTable tableName="INSTRUMENT_COUNT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INSTRUMENT_COUNT"/>
+            </column>
+            <column name="COUNT_" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="MusicShop">
+        <createTable tableName="INSTRUMENT_INSTRUMENT_COUNT_LINK">
+            <column name="INSTRUMENT_COUNT_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INSTRUMENT_INSTRUMENT_COUNT_LINK"/>
+            </column>
+            <column name="INSTRUMENT_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INSTRUMENT_INSTRUMENT_COUNT_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="MusicShop">
+        <addForeignKeyConstraint baseColumnNames="INSTRUMENT_ID" baseTableName="INSTRUMENT_INSTRUMENT_COUNT_LINK"
+                                 constraintName="FK_INSINSCOU_ON_INSTRUMENT" referencedColumnNames="ID"
+                                 referencedTableName="INSTRUMENT"/>
+    </changeSet>
+    <changeSet id="5" author="MusicShop">
+        <addForeignKeyConstraint baseColumnNames="INSTRUMENT_COUNT_ID" baseTableName="INSTRUMENT_INSTRUMENT_COUNT_LINK"
+                                 constraintName="FK_INSINSCOU_ON_INSTRUMENT_COUNT" referencedColumnNames="ID"
+                                 referencedTableName="INSTRUMENT_COUNT"/>
+    </changeSet>
+</databaseChangeLog>

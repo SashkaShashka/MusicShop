@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        caption="msg://cartEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="cartDc"
+                  class="com.company.musicshop.entity.Cart">
+            <fetchPlan>
+                <property name="instrumentCart" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+            <collection id="instrumentCartDc" property="instrumentCart"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" expand="editActions">
+        <form id="form" dataContainer="cartDc">
+            <column width="350px">
+            </column>
+        </form>
+        <groupBox id="instrumentCartBox" caption="msg://com.company.musicshop.entity/Cart.instrumentCart">
+            <table id="instrumentCartTable" dataContainer="instrumentCartDc" width="100%" height="100%">
+                <actions>
+                    <action id="add" type="add"/>
+                    <action id="exclude" type="exclude"/>
+                </actions>
+                <columns>
+                    <column id="count"/>
+                    <column id="instrument"/>
+                    <column id="sum"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="instrumentCartTable.add"/>
+                    <button action="instrumentCartTable.exclude"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

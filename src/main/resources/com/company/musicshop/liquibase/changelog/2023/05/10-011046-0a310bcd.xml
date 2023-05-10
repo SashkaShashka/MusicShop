@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.11.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="MusicShop">
+        <createTable tableName="CART">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CART"/>
+            </column>
+            <column name="CARTSUM" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="MusicShop">
+        <createTable tableName="CART_COUNT_INSTRUMENTS_LINK">
+            <column name="CART_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CART_COUNT_INSTRUMENTS_LINK"/>
+            </column>
+            <column name="COUNT_INSTRUMENTS_ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CART_COUNT_INSTRUMENTS_LINK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="MusicShop">
+        <createTable tableName="CUSTOMER">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CUSTOMER"/>
+            </column>
+            <column name="CART_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="MusicShop">
+        <addColumn tableName="ORDER_">
+            <column name="CUSTOMER_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="5" author="MusicShop">
+        <createIndex indexName="IDX_CUSTOMER_CART" tableName="CUSTOMER">
+            <column name="CART_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CART_ID" baseTableName="CUSTOMER" constraintName="FK_CUSTOMER_ON_CART"
+                                 referencedColumnNames="ID" referencedTableName="CART"/>
+    </changeSet>
+    <changeSet id="6" author="MusicShop">
+        <createIndex indexName="IDX_ORDER__CUSTOMER" tableName="ORDER_">
+            <column name="CUSTOMER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CUSTOMER_ID" baseTableName="ORDER_"
+                                 constraintName="FK_ORDER__ON_CUSTOMER" referencedColumnNames="ID"
+                                 referencedTableName="CUSTOMER"/>
+    </changeSet>
+    <changeSet id="7" author="MusicShop">
+        <addForeignKeyConstraint baseColumnNames="CART_ID" baseTableName="CART_COUNT_INSTRUMENTS_LINK"
+                                 constraintName="FK_CARCOUINS_ON_CART" referencedColumnNames="ID"
+                                 referencedTableName="CART"/>
+    </changeSet>
+    <changeSet id="8" author="MusicShop">
+        <addForeignKeyConstraint baseColumnNames="COUNT_INSTRUMENTS_ID" baseTableName="CART_COUNT_INSTRUMENTS_LINK"
+                                 constraintName="FK_CARCOUINS_ON_COUNT_INSTRUMENTS" referencedColumnNames="ID"
+                                 referencedTableName="COUNT_INSTRUMENTS"/>
+    </changeSet>
+</databaseChangeLog>
