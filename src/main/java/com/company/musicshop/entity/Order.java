@@ -42,6 +42,7 @@ public class Order {
     @ManyToMany
     private List<CountInstruments> instrumentOrder;
 
+    @NotNull
     @JoinColumn(name = "CUSTOMER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
